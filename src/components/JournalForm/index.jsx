@@ -8,7 +8,7 @@ const JournalForm = ({ formAction, SubmitAction, journal }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (formAction === 0) {
-      SubmitAction(title.current.value, file.current.files);
+      SubmitAction(title.current.value, file.current.files[0]);
     } else {
       const newJournal = {
         journalId: journal.journalId,

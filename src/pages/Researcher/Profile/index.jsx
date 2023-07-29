@@ -25,7 +25,6 @@ const Profile = () => {
     <div>
       <header className="m-3">
         <h1>{researcher.name}</h1>
-
         {user.researcherId === researcher.researcherId && (
           <>
             <NavLink className="btn btn-primary" to="/researcher/upload-journal">
@@ -34,9 +33,7 @@ const Profile = () => {
           </>
         )}
         {researcher?.researcherId!==undefined && (
-          <div>
             <FollowBtn researcherId={researcher.researcherId}/>
-          </div>
         )}
       </header>
       <Feed journals={journals} />

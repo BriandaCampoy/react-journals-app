@@ -4,20 +4,26 @@ import ResearcherService from '../services/ResearcherService';
 import SubscriptionService from '../services/SubscriptionService';
 
 const AuthProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [subscriptions, setSubscriptions] = useState([]);
-  useEffect(()=>{
-    getSubscriptions('2e52b78b-f524-40ac-9704-3bd1543939de')
-  },[])
-  const [user, setUser] = useState({
-    researcherId: '2e52b78b-f524-40ac-9704-3bd1543939de',
-    name: 'Brianda Campoy',
-    email: 'rakka@gmail.com',
-    password: '94511Cam'
-  });
+  const [user, setUser] = useState({});
 
   const isFollowed = (researcherId) => {
+    console.log(researcherId, 'revisando si es un follower', subscriptions);
     return subscriptions.find((p) => p.followedResearcherId === researcherId);
+  };
+
+  const updateLoggedResearcher = (researcher) => {
+    const newResearcher = {
+      name: researcher.name,
+      password: researcher.password,
+      email:user.email
+    }
+    ResearcherService.putResearcher(user.researcherId, newResearcher).then(
+      (res) => {
+        setUser({...user, newResearcher});
+      }
+    );
   };
 
   const login = (email, password, result) => {
@@ -38,12 +44,13 @@ const AuthProvider = ({ children }) => {
   const getSubscriptions = (id) => {
     SubscriptionService.getSubscriptions(id).then((subs) => {
       setSubscriptions(subs);
+      console.log('refreshing subs', subs);
     });
   };
 
   const refreshSubscriptions = () => {
-    getSubscriptions(user.researcherId)
-  }
+    getSubscriptions(user.researcherId);
+  };
 
   const logout = () => {
     // make an API call to logout the user
@@ -53,7 +60,15 @@ const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ isLoggedIn, user, login, logout, isFollowed, refreshSubscriptions }}
+      value={{
+        isLoggedIn,
+        user,
+        login,
+        logout,
+        isFollowed,
+        refreshSubscriptions,
+        updateLoggedResearcher
+      }}
     >
       {children}
     </AuthContext.Provider>

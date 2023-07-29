@@ -4,11 +4,11 @@ import SubscriptionService from '../../services/SubscriptionService';
 
 const FollowBtn = ({ researcherId }) => {
   const { user, isFollowed, refreshSubscriptions } = useContext(AuthContext);
-  const [followed, setFollowed] = useState(isFollowed(researcherId));
-  // console.log(researcherId);
-  // useEffect(()=>{
-  //   setFollowed();
-  // },[])
+  const [followed, setFollowed] = useState(false);
+  
+  useEffect(()=>{
+    setFollowed(isFollowed(researcherId))
+  },[])
 
   const handleFollowBtn = () => {
     if (followed) {

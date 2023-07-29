@@ -23,7 +23,7 @@ function App() {
       <HashRouter>
         <Routes>
           <Route exact path="/signup" element={<SignUp />} />
-          <Route exact path="/" element={<Login />} />
+          <Route exact path="/*" element={<Login />} />
         </Routes>
       </HashRouter>
     );

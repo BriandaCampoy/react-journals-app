@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import JournalForm from '../../../components/Journal-form'
+import JournalForm from '../../../components/JournalForm'
 import { useParams, useNavigate } from 'react-router-dom'
 import JournalService from '../../../services/JournalService';
 import AuthContext from '../../../context/AuthContext ';

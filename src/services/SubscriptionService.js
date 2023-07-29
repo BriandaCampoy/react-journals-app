@@ -37,8 +37,9 @@ export default {
       return data;
     } catch (error) {}
   },
-  unSubscribe: async (subscriptionId, subscription) => {
+  unSubscribe: async (subscriptionId) => {
     try {
+      console.log('unsubscribing');
       const response = await fetch(`${service_enpoint}/${subscriptionId}`, {
         method: 'DELETE'
       })

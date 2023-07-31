@@ -66,8 +66,7 @@ export default {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(researcher)
       });
-      const data = await response.json();
-      return data;
+      return  response;
     } catch (error) {
       throw error;
     }

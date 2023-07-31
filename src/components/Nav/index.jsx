@@ -1,9 +1,20 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
-import AuthContext from '../../context/AuthContext ';
+import { useUserContext } from '../../context/useUserContext';
 
+/**
+ * Nav Component
+ *
+ * This component represents the top navigation bar of the application.
+ *
+ * @returns {JSX.Element} - The JSX element representing the top navigation bar.
+ */
 const Nav = () => {
-  const {logout, user} = useContext(AuthContext);
+  const { logout, user } = useUserContext();
+
+  /**
+   * Toggle the sidebar visibility when the sidebarToggle button is clicked.
+   */
   const sidebarToggled = () => {
     document.body.classList.toggle('sb-sidenav-toggled');
     localStorage.setItem(
@@ -12,9 +23,12 @@ const Nav = () => {
     );
   };
 
-  const handleLogout=()=>{
+  /**
+   * Handle user logout.
+   */
+  const handleLogout = () => {
     logout();
-  }
+  };
 
   return (
     <nav className="sb-topnav navbar navbar-expand navbar-dark bg-dark">
@@ -46,19 +60,28 @@ const Nav = () => {
           >
             <li>
               <div className="dropdown-item">
-                <NavLink to="/researcher/edit/" className="list-group-item">Settings</NavLink>
+                <NavLink to="/researcher/edit/" className="list-group-item">
+                  Settings
+                </NavLink>
               </div>
             </li>
             <li>
               <div className="dropdown-item">
-                <NavLink to={`/researcher/profile/${user.researcherId}`} className="list-group-item">Profile</NavLink>
+                <NavLink
+                  to={`/researcher/profile/${user.researcherId}`}
+                  className="list-group-item"
+                >
+                  Profile
+                </NavLink>
               </div>
             </li>
             <li>
               <hr className="dropdown-divider" />
             </li>
             <li>
-              <button onClick={handleLogout} className="dropdown-item">Logout</button>
+              <button onClick={handleLogout} className="dropdown-item">
+                Logout
+              </button>
             </li>
           </ul>
         </li>

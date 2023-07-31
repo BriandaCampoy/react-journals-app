@@ -1,10 +1,27 @@
 import React, { useState, useRef } from 'react';
 
+/**
+ * JournalForm Component
+ *
+ * This component represents a form for uploading or updating a journal.
+ *
+ * @param {Object} props - Props for the JournalForm component.
+ * @param {number} props.formAction - The action to be performed by the form (0: Upload, 1: Update).
+ * @param {function} props.SubmitAction - The function to be called when the form is submitted.
+ * @param {Object} props.journal - The journal object containing information for updating (optional).
+ * @returns {JSX.Element} - The JSX element representing the journal form.
+ */
 const JournalForm = ({ formAction, SubmitAction, journal }) => {
   const [error, setError] = useState(false);
   const title = useRef();
   const file = useRef();
   const keepOriginal = useRef();
+
+  /**
+   * Handle form submission and call the appropriate SubmitAction function based on formAction.
+   *
+   * @param {Object} event - The form submission event.
+   */
   const handleSubmit = (event) => {
     event.preventDefault();
     if (formAction === 0) {
@@ -51,7 +68,9 @@ const JournalForm = ({ formAction, SubmitAction, journal }) => {
                         id="inputTitle"
                         type="text"
                         name="title"
-                        defaultValue={journal?.title!==undefined?journal.title:''}
+                        defaultValue={
+                          journal?.title !== undefined ? journal.title : ''
+                        }
                         required
                         ref={title}
                         placeholder="Enter the title"

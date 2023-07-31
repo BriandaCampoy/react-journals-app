@@ -1,9 +1,7 @@
 import { HashRouter, Routes, Route } from 'react-router-dom';
-import { useContext } from 'react';
 import Aside from './components/Aside';
 import Nav from './components/Nav';
 import Footer from './components/Footer';
-import AuthContext from './context/AuthContext ';
 import Home from './pages/Home';
 import Researcher from './pages/Researcher';
 import Journal from './pages/Journal';
@@ -15,10 +13,16 @@ import UploadJournal from './pages/Researcher/UploadJournal';
 import Profile from './pages/Researcher/Profile';
 import JournalView from './pages/Journal/JournalView';
 import JournalEdit from './pages/Journal/JournalEdit';
+import { useUserContext } from './context/useUserContext';
 
+/**
+ * Main App component that handles routing and rendering different pages based on user authentication status.
+ * If the user is not authenticated, it displays the SignUp and Login pages. Otherwise, it shows the user-specific content.
+ */
 function App() {
-  const { isLoggedIn } = useContext(AuthContext);
-  if (!isLoggedIn) {
+  const { user } = useUserContext();
+  // Check if the user is not authenticated (user name is not present).
+  if (!user.name) {
     return (
       <HashRouter>
         <Routes>
@@ -28,6 +32,7 @@ function App() {
       </HashRouter>
     );
   } else {
+    // If the user is authenticated, display the user-specific content.
     return (
       <>
         <HashRouter>

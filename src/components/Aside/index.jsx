@@ -1,9 +1,16 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
-import AuthContext from '../../context/AuthContext ';
+import { useUserContext } from '../../context/useUserContext';
 
+/**
+ * Aside Component
+ *
+ * This component represents the side navigation menu that displays profile information and links for researchers.
+ *
+ * @returns {JSX.Element} - The JSX element representing the side navigation menu.
+ */
 const Aside = () => {
-  const {user}=useContext(AuthContext); 
+  const {user} = useUserContext() 
   return (
       <div id="layoutSidenav_nav">
         <nav

@@ -1,8 +1,50 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useRef, useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import ResearcherService from '../../services/ResearcherService';
 
+/**
+ * SignUp component to allow users to create a new account.
+ * Displays a form to enter user details such as name, email, password, and confirm password.
+ * @returns {JSX.Element} A JSX element representing the SignUp component.
+ */
 const SignUp = () => {
-  const handleSignUp = () => {};
+  // State to store the error status for password mismatch.
+  const [error, setError] = useState(false);
+
+  // React Router's `useNavigate` hook to handle navigation.
+  const navigate = useNavigate();
+
+  // Refs to access the input field values.
+  const nameForm = useRef();
+  const emailForm = useRef();
+  const passwordForm = useRef();
+  const confirmPasswordForm = useRef();
+
+  /**
+   * Handles the form submission to create a new account.
+   * Checks if the passwords entered by the user match.
+   * If passwords match, it logs "crear usuario" to the console (should be replaced with the actual account creation logic).
+   * Otherwise, it sets the error state to true to display a password mismatch message.
+   * @param {Event} event - The form submission event.
+   */
+  const handleSignUp = (event) => {
+    event.preventDefault();
+    if (passwordForm.current.value !== confirmPasswordForm.current.value) {
+      setError(true);
+    } else {
+      // Create a new researcher object with the input field values.
+      const newResearcher = {
+        name: nameForm.current.value,
+        email: emailForm.current.value,
+        password: passwordForm.current.value
+      };
+      // Call the ResearcherService to create a new researcher account.
+      ResearcherService.postResearcher(newResearcher).then((res) => {
+        // If the account creation is successful, navigate to the homepage.
+        navigate('/');
+      });
+    }
+  };
 
   return (
     <main>
@@ -22,6 +64,7 @@ const SignUp = () => {
                       <div className="form-floating">
                         <input
                           className="form-control"
+                          ref={nameForm}
                           id="inputName"
                           type="text"
                           required
@@ -36,6 +79,7 @@ const SignUp = () => {
                     <input
                       className="form-control"
                       id="inputEmail"
+                      ref={emailForm}
                       type="email"
                       name="email"
                       required
@@ -50,6 +94,7 @@ const SignUp = () => {
                           className="form-control"
                           id="inputPassword"
                           type="password"
+                          ref={passwordForm}
                           required
                           name="password"
                           placeholder="Create a password"
@@ -63,6 +108,7 @@ const SignUp = () => {
                           className="form-control"
                           id="inputPasswordConfirm"
                           type="password"
+                          ref={confirmPasswordForm}
                           required
                           name="confirmPassword"
                           placeholder="Confirm password"
@@ -70,8 +116,11 @@ const SignUp = () => {
                         <label htmlFor="inputPasswordConfirm">
                           Confirm Password
                         </label>
-                        {/* Error */}
-                        <span className="text-danger">¡Passwords must match!</span>
+                        {error && (
+                          <span className="text-danger">
+                            ¡Passwords must match!
+                          </span>
+                        )}
                       </div>
                     </div>
                   </div>

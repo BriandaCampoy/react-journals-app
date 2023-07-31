@@ -1,16 +1,32 @@
-import React, { useContext, useRef, useState } from 'react';
-import { NavLink } from 'react-router-dom';
-import AuthContext from '../../context/AuthContext ';
+import React, { useRef, useState } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useUserContext } from '../../context/useUserContext';
 
+/**
+ * Login Component
+ *
+ * This component represents a login form where users can enter their email and password to log in.
+ *
+ * @returns {JSX.Element} - The JSX element representing the login form.
+ */
 const Login = () => {
-  const [correctData, setCorrectData]= useState(true)
-  const { login } = useContext(AuthContext);
+  const [correctData, setCorrectData] = useState(true);
+  const { login } = useUserContext();
   const email = useRef();
   const password = useRef();
 
+  /**
+   * Handle login form submission.
+   * Calls the login function from the user context with the provided email and password.
+   * Updates the correctData state to display an error message if login is unsuccessful.
+   *
+   * @param {Event} event - The form submission event.
+   */
   function handleLogin(event) {
     event.preventDefault();
-    login(email.current.value, password.current.value, setCorrectData);
+    login(email.current.value, password.current.value).then((res) => {
+      setCorrectData(res);
+    });
   }
 
   return (
@@ -46,15 +62,12 @@ const Login = () => {
                   />
                   <label htmlFor="inputPassword">Password</label>
                 </div>
-                {!correctData &&
-                <div className='alert alert-danger'>
-                  ¡Incorrect user information!
-                </div>
-                  
-                }
-                <div>
-
-                </div>
+                {!correctData && (
+                  <div className="alert alert-danger">
+                    ¡Incorrect user information!
+                  </div>
+                )}
+                <div></div>
                 <div className="d-flex align-items-center justify-content-center mt-4 mb-0">
                   <button
                     type="submit"

@@ -1,5 +1,12 @@
 import React from 'react';
 
+/**
+ * Footer Component
+ *
+ * This component represents the footer section of the website.
+ *
+ * @returns {JSX.Element} - The JSX element representing the footer section.
+ */
 const Footer = () => {
   return (
     <footer className="py-4 bg-light mt-auto">

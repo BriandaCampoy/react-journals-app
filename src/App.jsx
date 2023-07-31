@@ -28,10 +28,12 @@ function App() {
   if (!user.name) {
     return (
       <HashRouter>
-        <Routes>
-          <Route exact path="/signup" element={<SignUp />} />
-          <Route exact path="/*" element={<Login />} />
-        </Routes>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Routes>
+            <Route exact path="/signup" element={<SignUp />} />
+            <Route exact path="/*" element={<Login />} />
+          </Routes>
+        </Suspense>
       </HashRouter>
     );
   } else {
